@@ -1,0 +1,14 @@
+{
+  "alpha": {
+    "name": "شركة ألفا التقنية",
+    "logo": "https://ui-avatars.com/api/?name=Alpha&background=0D9488&color=fff&rounded=true",
+    "primaryColor": "#0D9488",
+    "language": "ar"
+  },
+  "beta": {
+    "name": "Beta Solutions",
+    "logo": "https://ui-avatars.com/api/?name=Beta&background=2563EB&color=fff&rounded=true",
+    "primaryColor": "#2563EB",
+    "language": "en"
+  }
+}

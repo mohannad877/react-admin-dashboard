@@ -1,15 +1,21 @@
 import { NavLink } from 'react-router-dom';
 import { LayoutDashboard, Users, Package, Moon, Sun, ChevronRight, ChevronLeft, BarChart3 } from 'lucide-react';
-import { useTheme } from '../../contexts/ThemeContext';
+import { useTheme } from '../../application/contexts/ThemeContext';
+import { useTranslation } from 'react-i18next';
+import { switchLanguage } from '../../shared/config/i18n';
+import { Globe } from 'lucide-react';
 
-const navigation = [
-  { name: 'لوحة التحكم', href: '/', icon: LayoutDashboard },
-  { name: 'المستخدمين', href: '/users', icon: Users },
-  { name: 'المنتجات', href: '/products', icon: Package },
-];
+
 
 export default function Sidebar({ collapsed, onToggle, className = '' }) {
   const { isDark, toggleTheme } = useTheme();
+  const { t, i18n } = useTranslation();
+  
+  const navigation = [
+    { name: t('dashboard'), href: '/', icon: LayoutDashboard },
+    { name: t('users'), href: '/users', icon: Users },
+    { name: t('products'), href: '/products', icon: Package },
+  ];
   
   return (
     <aside className={`
@@ -93,6 +99,18 @@ export default function Sidebar({ collapsed, onToggle, className = '' }) {
           {!collapsed && (
             <span>{isDark ? 'الوضع الفاتح' : 'الوضع الليلي'}</span>
           )}
+        </button>
+        <button
+          onClick={() => switchLanguage(i18n.language.startsWith('ar') ? 'en' : 'ar')}
+          title={t('language')}
+          className={`flex items-center gap-3 px-3 py-2.5 w-full rounded-lg text-sm font-medium
+            text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800
+            transition-colors duration-150 mt-2
+            ${collapsed ? 'justify-center' : ''}
+          `}
+        >
+          <Globe size={18} className="text-blue-500 flex-shrink-0" />
+          {!collapsed && <span>{t('language')}</span>}
         </button>
       </div>
     </aside>

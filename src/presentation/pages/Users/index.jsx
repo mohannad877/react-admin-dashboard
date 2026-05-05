@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, RefreshCw } from 'lucide-react';
 import DataTable from '../../components/ui/DataTable';
 import { Button } from '../../components/ui/Button';
-import { userService } from '../../services/api';
-import { translateRole, formatDate } from '../../utils/helpers';
+import { userRepository } from '../../../infrastructure/repositories/UserRepository';
+import { translateRole, formatDate } from '../../../shared/utils/helpers';
 import UserModal from '../../components/users/UserModal';
 
 export default function UsersPage() {
@@ -21,7 +21,7 @@ export default function UsersPage() {
       const params = {};
       if (filters.role) params.role = filters.role;
       if (filters.status) params.status = filters.status;
-      const { data } = await userService.getAll(params);
+      const data = await userRepository.getAll(params);
       setUsers(data);
     } catch (err) {
       setError('تعذّر الاتصال بالخادم. تأكد من تشغيل JSON Server.');
@@ -35,7 +35,7 @@ export default function UsersPage() {
   const handleDelete = async (userId, userName) => {
     if (!window.confirm(`هل أنت متأكد من حذف "${userName}"؟`)) return;
     try {
-      await userService.delete(userId);
+      await userRepository.delete(userId);
       fetchUsers();
     } catch {
       alert('فشل الحذف، حاول مجدداً.');

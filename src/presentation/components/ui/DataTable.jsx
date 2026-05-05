@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { ChevronUp, ChevronDown, Search } from 'lucide-react';
-import { useDebounce } from '../../hooks/useDebounce';
+import { useDebounce } from '../../../application/hooks/useDebounce';
 
 export default function DataTable({ 
   data = [], 

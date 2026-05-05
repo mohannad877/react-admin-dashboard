@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Users, Package, AlertTriangle, TrendingUp, ShoppingCart, Activity } from 'lucide-react';
-import { userService, productService } from '../../services/api';
+import { userRepository } from '../../../infrastructure/repositories/UserRepository';
+import { productRepository } from '../../../infrastructure/repositories/ProductRepository';
 import {
   AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell,
   XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid
@@ -42,11 +43,11 @@ export default function Dashboard() {
     const fetchData = async () => {
       try {
         const [usersRes, productsRes] = await Promise.all([
-          userService.getAll(),
-          productService.getAll()
+          userRepository.getAll(),
+          productRepository.getAll()
         ]);
-        setUsers(usersRes.data);
-        setProducts(productsRes.data);
+        setUsers(usersRes);
+        setProducts(productsRes);
       } catch (error) {
         console.error('خطأ في جلب البيانات:', error);
       } finally {

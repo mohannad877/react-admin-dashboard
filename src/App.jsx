@@ -1,8 +1,9 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import MainLayout from './components/layout/MainLayout';
-import Dashboard from './pages/Dashboard';
-import UsersPage from './pages/Users';
-import ProductsPage from './pages/Products';
+import MainLayout from './presentation/layouts/MainLayout';
+import Dashboard from './presentation/pages/Dashboard';
+import UsersPage from './presentation/pages/Users';
+import ProductsPage from './presentation/pages/Products';
+import { useAnalytics } from './application/hooks/useAnalytics';
 
 const router = createBrowserRouter([
   {
@@ -17,5 +18,6 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
+  useAnalytics(import.meta.env.VITE_GA_ID);
   return <RouterProvider router={router} />;
 }

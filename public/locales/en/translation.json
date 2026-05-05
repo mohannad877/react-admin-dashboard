@@ -1,0 +1,15 @@
+{
+  "dashboard": "Dashboard",
+  "users": "User Management",
+  "products": "Product Management",
+  "search": "Search...",
+  "darkMode": "Dark Mode",
+  "lightMode": "Light Mode",
+  "totalUsers": "Total Users",
+  "activeUsers": "Active Users",
+  "totalProducts": "Total Products",
+  "lowStock": "Low Stock",
+  "admin": "Admin",
+  "language": "عربي",
+  "welcome": "Welcome, Admin 👋"
+}

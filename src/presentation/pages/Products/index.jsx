@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, RefreshCw } from 'lucide-react';
 import DataTable from '../../components/ui/DataTable';
 import { Button } from '../../components/ui/Button';
-import { productService } from '../../services/api';
-import { translateCategory, formatPrice, calculateProductStatus } from '../../utils/helpers';
+import { productRepository } from '../../../infrastructure/repositories/ProductRepository';
+import { translateCategory, formatPrice, calculateProductStatus } from '../../../shared/utils/helpers';
 import ProductModal from '../../components/products/ProductModal';
 
 const StockBadge = ({ stock, minStockAlert = 10 }) => {
@@ -41,7 +41,7 @@ export default function ProductsPage() {
       if (filters.category) params.category = filters.category;
       if (filters.minPrice) params.price_gte = filters.minPrice;
       if (filters.maxPrice) params.price_lte = filters.maxPrice;
-      const { data } = await productService.getAll(params);
+      const data = await productRepository.getAll(params);
       setProducts(data);
     } catch {
       setError('تعذّر الاتصال بالخادم. تأكد من تشغيل JSON Server.');
@@ -55,7 +55,7 @@ export default function ProductsPage() {
   const handleDelete = async (id, name) => {
     if (!window.confirm(`هل أنت متأكد من حذف "${name}"؟`)) return;
     try {
-      await productService.delete(id);
+      await productRepository.delete(id);
       fetchProducts();
     } catch {
       alert('فشل الحذف، حاول مجدداً.');

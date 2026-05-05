@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { X } from 'lucide-react';
 import { Button } from '../ui/Button';
-import { productService } from '../../services/api';
-import { calculateProductStatus } from '../../utils/helpers';
+import { productRepository } from '../../../infrastructure/repositories/ProductRepository';
+import { calculateProductStatus } from '../../../shared/utils/helpers';
 
 const categoryOptions = [
   { value: 'electronics', label: 'إلكترونيات' },
@@ -47,9 +47,9 @@ export default function ProductModal({ product, onClose, onSave }) {
     };
     try {
       if (isEdit) {
-        await productService.update(product.id, data);
+        await productRepository.update(product.id, data);
       } else {
-        await productService.create(data);
+        await productRepository.create(data);
       }
       onSave();
     } catch {

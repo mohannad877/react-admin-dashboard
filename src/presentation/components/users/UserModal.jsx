@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { X } from 'lucide-react';
 import { Button } from '../ui/Button';
-import { userService } from '../../services/api';
+import { userRepository } from '../../../infrastructure/repositories/UserRepository';
 
 const roleOptions = [
   { value: 'admin', label: 'مدير' },
@@ -43,9 +43,9 @@ export default function UserModal({ user, onClose, onSave }) {
     setSaving(true);
     try {
       if (isEdit) {
-        await userService.update(user.id, formData);
+        await userRepository.update(user.id, formData);
       } else {
-        await userService.create(formData);
+        await userRepository.create(formData);
       }
       onSave();
     } catch {

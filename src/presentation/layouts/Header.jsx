@@ -1,5 +1,6 @@
 import { Menu, Bell } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
+import { useTenant } from '../../application/contexts/TenantProvider';
 
 const pageTitles = {
   '/': 'لوحة التحكم',
@@ -9,6 +10,7 @@ const pageTitles = {
 
 export default function Header({ onMenuClick }) {
   const location = useLocation();
+  const { config } = useTenant();
   const title = pageTitles[location.pathname] || 'لوحة التحكم';
 
   return (
@@ -23,9 +25,12 @@ export default function Header({ onMenuClick }) {
             <Menu size={20} />
           </button>
           <div>
-            <h1 className="text-lg font-bold text-slate-900 dark:text-slate-100 leading-tight">
-              {title}
-            </h1>
+            <div className="flex items-center gap-2">
+              <img src={config.logo} alt="Tenant Logo" className="h-6 w-6 rounded-full" />
+              <h1 className="text-lg font-bold text-slate-900 dark:text-slate-100 leading-tight">
+                {config.name}
+              </h1>
+            </div>
           </div>
         </div>
         

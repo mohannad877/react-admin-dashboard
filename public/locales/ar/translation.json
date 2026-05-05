@@ -1,0 +1,15 @@
+{
+  "dashboard": "لوحة التحكم",
+  "users": "إدارة المستخدمين",
+  "products": "إدارة المنتجات",
+  "search": "بحث...",
+  "darkMode": "الوضع الليلي",
+  "lightMode": "الوضع الفاتح",
+  "totalUsers": "إجمالي المستخدمين",
+  "activeUsers": "المستخدمين النشطين",
+  "totalProducts": "إجمالي المنتجات",
+  "lowStock": "مخزون منخفض",
+  "admin": "مسؤول",
+  "language": "English",
+  "welcome": "مرحباً، المسؤول 👋"
+}
