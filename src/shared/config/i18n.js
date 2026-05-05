@@ -3,16 +3,16 @@ import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
 // Import locales directly for initial load (optional, but good for SPA without backend i18n hosting)
-import ar from '../../../public/locales/ar/translation.json';
-import en from '../../../public/locales/en/translation.json';
+import arTranslation from '../../locales/ar/translation.json';
+import enTranslation from '../../locales/en/translation.json';
 
 i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     resources: {
-      ar: { translation: ar },
-      en: { translation: en }
+      ar: { translation: arTranslation },
+      en: { translation: enTranslation }
     },
     fallbackLng: 'ar',
     interpolation: {
