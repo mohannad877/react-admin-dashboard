@@ -1,10 +1,10 @@
 <div align="center">
   <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/layout-dashboard.svg" alt="Admin Dashboard Logo" width="100" />
   
-  # 🚀 React Admin Dashboard SA
+  # 🚀 React Admin Dashboard
   
-  <p><strong>لوحة تحكم تفاعلية احترافية لمطوري الواجهات الأمامية في السعودية</strong></p>
-  <p><em>Professional Interactive Admin Dashboard for Frontend Developers in Saudi Arabia</em></p>
+  <p><strong>لوحة تحكم تفاعلية احترافية لمطوري الواجهات الأمامية في كل مكان</strong></p>
+  <p><em>Professional Interactive Admin Dashboard for Frontend Developers</em></p>
 
   <p>
     <img src="https://img.shields.io/badge/React_18-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" />
@@ -16,7 +16,7 @@
 
   <p>
     <a href="#-english-version">🇬🇧 English</a> · 
-    <a href="#-النسخة-العربية">🇸🇦 العربية</a>
+    <a href="#-النسخة-العربية">🌐 العربية</a>
   </p>
 </div>
 
@@ -70,10 +70,10 @@ npm run dev:all
 <hr />
 <br />
 
-## 🇸🇦 النسخة العربية
+## 🌐 النسخة العربية
 
 ### 🎯 لماذا هذا المشروع؟
-> 💼 **للمطورين في السعودية**: لوحات التحكم (Admin Dashboards) هي من أكثر المهارات المطلوبة في مقابلات عمل Frontend في الشركات السعودية. هذا المشروع صُمم ليكون **نموذجاً احترافياً** يُبرز قدرتك على:
+> 💼 **للمطورين**: لوحات التحكم (Admin Dashboards) هي من أكثر المهارات المطلوبة في مقابلات عمل Frontend. هذا المشروع صُمم ليكون **نموذجاً احترافياً** يُبرز قدرتك على:
 > 
 > ✅ بناء واجهات معقدة بـ React  
 > ✅ إدارة حالة متقدمة (Context/Redux)  
@@ -228,7 +228,7 @@ git push origin main
 
 <div align="center">
   <p>
-    <strong>صُنع بـ ❤️ في السعودية 🇸🇦</strong><br />
+    <strong>صُنع بـ ❤️ في كل مكان 🌍</strong><br />
     Developed with ❤️ by <a href="https://github.com/mohannad877">Mohannad</a>
   </p>
   
