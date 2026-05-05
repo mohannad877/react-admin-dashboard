@@ -1,0 +1,160 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "فاطمة الحربي",
+      "email": "fatima@company.sa",
+      "role": "admin",
+      "status": "active",
+      "joinDate": "2025-02-15",
+      "avatar": "https://i.pravatar.cc/150?img=47",
+      "phone": "+966501234567",
+      "department": "تقنية المعلومات"
+    },
+    {
+      "id": "2",
+      "name": "محمد العمري",
+      "email": "mohammed@company.sa",
+      "role": "editor",
+      "status": "active",
+      "joinDate": "2025-03-10",
+      "avatar": "https://i.pravatar.cc/150?img=12",
+      "phone": "+966507654321",
+      "department": "التسويق"
+    },
+    {
+      "id": "3",
+      "name": "سارة الشمري",
+      "email": "sara@company.sa",
+      "role": "viewer",
+      "status": "inactive",
+      "joinDate": "2025-01-20",
+      "avatar": "https://i.pravatar.cc/150?img=32",
+      "phone": "+966512345678",
+      "department": "الموارد البشرية"
+    },
+    {
+      "id": "4",
+      "name": "خالد القحطاني",
+      "email": "khaled@company.sa",
+      "role": "editor",
+      "status": "active",
+      "joinDate": "2025-04-05",
+      "avatar": "https://i.pravatar.cc/150?img=68",
+      "phone": "+966598765432",
+      "department": "المبيعات"
+    },
+    {
+      "id": "5",
+      "name": "نورة السبيعي",
+      "email": "noura@company.sa",
+      "role": "viewer",
+      "status": "active",
+      "joinDate": "2025-05-01",
+      "avatar": "https://i.pravatar.cc/150?img=25",
+      "phone": "+966511223344",
+      "department": "المحاسبة"
+    },
+    {
+      "id": "6",
+      "name": "عبدالله الدوسري",
+      "email": "abdullah@company.sa",
+      "role": "admin",
+      "status": "inactive",
+      "joinDate": "2024-12-10",
+      "avatar": "https://i.pravatar.cc/150?img=53",
+      "phone": "+966544332211",
+      "department": "الإدارة"
+    }
+  ],
+  "products": [
+    {
+      "id": "101",
+      "name": "كرسي مكتبي إرجونوميك",
+      "category": "furniture",
+      "price": 450,
+      "stock": 23,
+      "minStockAlert": 10,
+      "status": "available",
+      "createdAt": "2025-03-01",
+      "image": "https://picsum.photos/seed/chair1/300/200"
+    },
+    {
+      "id": "102",
+      "name": "طاولة اجتماعات خشبية",
+      "category": "furniture",
+      "price": 1200,
+      "stock": 5,
+      "minStockAlert": 10,
+      "status": "low_stock",
+      "createdAt": "2025-02-20",
+      "image": "https://picsum.photos/seed/table1/300/200"
+    },
+    {
+      "id": "103",
+      "name": "ماوس لاسلكي احترافي",
+      "category": "electronics",
+      "price": 89,
+      "stock": 150,
+      "minStockAlert": 20,
+      "status": "available",
+      "createdAt": "2025-04-01",
+      "image": "https://picsum.photos/seed/mouse1/300/200"
+    },
+    {
+      "id": "104",
+      "name": "شاشة 27 بوصة 4K",
+      "category": "electronics",
+      "price": 899,
+      "stock": 0,
+      "minStockAlert": 5,
+      "status": "out_of_stock",
+      "createdAt": "2025-03-15",
+      "image": "https://picsum.photos/seed/monitor1/300/200"
+    },
+    {
+      "id": "105",
+      "name": "حزمة أوراق A4 (500 ورقة)",
+      "category": "supplies",
+      "price": 25,
+      "stock": 200,
+      "minStockAlert": 50,
+      "status": "available",
+      "createdAt": "2025-04-10",
+      "image": "https://picsum.photos/seed/paper1/300/200"
+    },
+    {
+      "id": "106",
+      "name": "لوحة مفاتيح ميكانيكية",
+      "category": "electronics",
+      "price": 320,
+      "stock": 8,
+      "minStockAlert": 10,
+      "status": "low_stock",
+      "createdAt": "2025-04-15",
+      "image": "https://picsum.photos/seed/keyboard1/300/200"
+    },
+    {
+      "id": "107",
+      "name": "خزانة ملفات معدنية",
+      "category": "furniture",
+      "price": 750,
+      "stock": 12,
+      "minStockAlert": 5,
+      "status": "available",
+      "createdAt": "2025-03-25",
+      "image": "https://picsum.photos/seed/cabinet1/300/200"
+    },
+    {
+      "id": "108",
+      "name": "أقلام جافة (علبة 12)",
+      "category": "supplies",
+      "price": 15,
+      "stock": 300,
+      "minStockAlert": 50,
+      "status": "available",
+      "createdAt": "2025-04-20",
+      "image": "https://picsum.photos/seed/pens1/300/200"
+    }
+  ]
+}
