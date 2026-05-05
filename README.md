@@ -224,12 +224,25 @@ git push origin main
 ## 📄 الرخصة | License
 هذا المشروع مفتوح المصدر تحت [رخصة MIT](LICENSE).
 
+## 📬 تواصل معي | Connect With Me
+
+<div align="center">
+
+**Mohannad Nabil Ahmed Mohammed Abdullah**  
+📍 Ibb – Yemen | 📱 +967 777 354 821
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/mohannadnabil)
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/mohannad877)
+[![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:mohannad.nabil.it@gmail.com)
+
+</div>
+
 ---
 
 <div align="center">
   <p>
     <strong>صُنع بـ ❤️ في كل مكان 🌍</strong><br />
-    Developed with ❤️ by <a href="https://github.com/mohannad877">Mohannad</a>
+    Developed with ❤️ by <a href="https://github.com/mohannad877">Mohannad Nabil</a>
   </p>
   
   <p>
