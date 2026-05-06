@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import {
-  Download, Filter, FileSpreadsheet, FileText,
+  Download, FileSpreadsheet, FileText,
   Printer, FileDown, Upload, CheckCircle, XCircle, Info
 } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
