@@ -7,3 +7,6 @@ dist/
 npm-debug.log*
 .vscode/
 *.sw*
+
+# Sensitive Files
+PASSWORD database.TEX
