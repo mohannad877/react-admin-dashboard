@@ -165,7 +165,7 @@ export default function ProductsPage() {
       const data = await productRepository.getAll(params);
       setProducts(data);
     } catch {
-      setError('{t('serverConnectionError')}');
+      setError(t('serverConnectionError'));
     } finally {
       setLoading(false);
     }
