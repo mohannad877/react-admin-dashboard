@@ -101,13 +101,13 @@ export default function Reports() {
       await new Promise(r => setTimeout(r, 500));
       setExportData(result);
       if (result.length > 0) {
-        showToast(`تم تحميل ${result.length} سجل. يمكنك الآن التصدير.`, 'info');
+        showToast(t('loadedRecordsSuccess').replace('{{count}}', result.length), 'info');
       } else {
-        showToast('لا توجد بيانات لهذا النطاق.', 'error');
+        showToast(t('noDataForRange'), 'error');
       }
     } catch (err) {
       console.error(err);
-      showToast('تعذّر جلب البيانات. تحقق من الاتصال.', 'error');
+      showToast(t('fetchDataFailed'), 'error');
     } finally {
       setExportLoading(false);
     }
@@ -118,7 +118,7 @@ export default function Reports() {
     const csv = objectsToCSV(exportData);
     const filename = `report_${reportType}_${new Date().toISOString().split('T')[0]}.csv`;
     downloadCSV(csv, filename);
-    showToast(`تم تصدير ${exportData.length} سجل كملف CSV بنجاح ✓`, 'success');
+    showToast(t('exportCsvSuccess').replace('{{count}}', exportData.length), 'success');
   };
 
   const handlePrint = () => {
@@ -131,14 +131,14 @@ export default function Reports() {
     const tpl = IMPORT_TEMPLATES[importType];
     const csv = objectsToCSV(tpl.sample, tpl.headers);
     downloadCSV(csv, `template_${importType}.csv`);
-    showToast('تم تحميل نموذج CSV. عدّل البيانات ثم ارفع الملف.', 'info');
+    showToast(t('templateDownloaded'), 'info');
   };
 
   const handleFileSelect = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
     if (!file.name.endsWith('.csv')) {
-      showToast('الرجاء اختيار ملف CSV فقط.', 'error');
+      showToast(t('selectCsvOnly'), 'error');
       return;
     }
     setImportLoading(true);
@@ -148,13 +148,13 @@ export default function Reports() {
       const { rows, headers } = csvToObjects(text);
 
       if (rows.length === 0) {
-        showToast('الملف فارغ أو لا يحتوي على بيانات صالحة.', 'error');
+        showToast(t('emptyFileError'), 'error');
         return;
       }
 
       // التحقق من وجود العمود id على الأقل
       if (!headers.includes('id')) {
-        showToast('يجب أن يحتوي الملف على عمود "id".', 'error');
+        showToast(t('missingIdColumn'), 'error');
         return;
       }
 
@@ -181,13 +181,13 @@ export default function Reports() {
 
       setImportResult({ ...result, total: rows.length });
       if (result.failed === 0) {
-        showToast(`تم استيراد ${result.success} سجل بنجاح ✓`, 'success');
+        showToast(t('importSuccess').replace('{{success}}', result.success), 'success');
       } else {
-        showToast(`تم استيراد ${result.success} سجل، فشل ${result.failed} سجل.`, 'error');
+        showToast(t('importPartialSuccess').replace('{{success}}', result.success).replace('{{failed}}', result.failed), 'error');
       }
     } catch (err) {
       console.error(err);
-      showToast('فشل معالجة الملف: ' + err.message, 'error');
+      showToast(t('fileProcessFailed') + err.message, 'error');
     } finally {
       setImportLoading(false);
       e.target.value = ''; // Reset input
@@ -195,14 +195,14 @@ export default function Reports() {
   };
 
   const reportTypes = [
-    { id: 'users',    name: t('users_report')    || 'تقرير المستخدمين', icon: FileText,      desc: 'تفاصيل نشاط وتوزيع المستخدمين' },
-    { id: 'products', name: t('products_report') || 'تقرير المخزون',    icon: PackageIcon,   desc: 'حركة المنتجات والكميات المتاحة' },
-    { id: 'sales',    name: t('sales_report')    || 'تقرير المبيعات',   icon: FileSpreadsheet, desc: 'الملخص المالي وحركة الطلبات' },
+    { id: 'users',    name: t('users_report'), icon: FileText,      desc: t('usersReportDesc') },
+    { id: 'products', name: t('products_report'), icon: PackageIcon,   desc: t('productsReportDesc') },
+    { id: 'sales',    name: t('sales_report'), icon: FileSpreadsheet, desc: t('salesReportDesc') },
   ];
 
   const importTypes = [
-    { id: 'users',    label: 'استيراد مستخدمين' },
-    { id: 'products', label: 'استيراد منتجات' },
+    { id: 'users',    label: t('importUsers') },
+    { id: 'products', label: t('importProducts') },
   ];
 
   return (
@@ -219,7 +219,7 @@ export default function Reports() {
       <div>
         <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">{t('reports')}</h2>
         <p className="text-slate-500 dark:text-slate-400 mt-1 text-sm">
-          توليد وتصدير واستيراد تقارير النظام بصيغة CSV
+          {t('reportsDesc')}
         </p>
       </div>
 
@@ -227,13 +227,13 @@ export default function Reports() {
       <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm print:hidden">
         <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200 mb-5 flex items-center gap-2">
           <Download size={18} className="text-teal-500" />
-          تصدير التقارير
+          {t('exportReports')}
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* نوع التقرير */}
           <div className="space-y-3">
-            <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">نوع التقرير</label>
+            <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">{t('reportTypeLabel')}</label>
             <div className="space-y-2">
               {reportTypes.map((type) => {
                 const Icon = type.icon;
@@ -270,21 +270,21 @@ export default function Reports() {
           {/* الفلاتر وصيغ التصدير */}
           <div className="space-y-4">
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">النطاق الزمني</label>
+              <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">{t('dateRange')}</label>
               <select
                 value={dateRange}
                 onChange={(e) => setDateRange(e.target.value)}
                 className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none"
               >
-                <option value="week">آخر 7 أيام</option>
-                <option value="month">هذا الشهر</option>
-                <option value="year">هذا العام</option>
-                <option value="all">كل الأوقات</option>
+                <option value="week">{t('last7Days')}</option>
+                <option value="month">{t('thisMonth')}</option>
+                <option value="year">{t('thisYear')}</option>
+                <option value="all">{t('allTime')}</option>
               </select>
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">صيغة التصدير</label>
+              <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">{t('exportFormat')}</label>
               <div className="flex gap-2">
                 <button
                   onClick={exportToCSV}
@@ -300,7 +300,7 @@ export default function Reports() {
                   className="flex-1 flex items-center justify-center gap-2 px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   <Printer size={16} className="text-blue-600" />
-                  طباعة / PDF
+                  {t('printPdf')}
                 </button>
               </div>
             </div>
@@ -310,7 +310,7 @@ export default function Reports() {
           <div className="flex flex-col justify-end pb-2">
             <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl mb-4 border border-slate-100 dark:border-slate-700/50">
               <p className="text-sm text-slate-600 dark:text-slate-400">
-                اضغط «إنشاء التقرير» لجلب البيانات، ثم اختر صيغة التصدير المطلوبة.
+                {t('generateReportHelp')}
               </p>
             </div>
             <Button
@@ -319,7 +319,7 @@ export default function Reports() {
               className="w-full h-12 text-md shadow-md"
               icon={exportLoading ? undefined : FileDown}
             >
-              {exportLoading ? 'جارٍ جلب البيانات...' : 'إنشاء التقرير'}
+              {exportLoading ? t('fetchingData') : t('generateReport')}
             </Button>
           </div>
         </div>
@@ -329,15 +329,15 @@ export default function Reports() {
       <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
         <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800/20">
           <h3 className="font-bold text-slate-800 dark:text-slate-200">
-            معاينة التقرير{' '}
-            <span className="text-slate-400 text-sm font-normal ml-2">({exportData.length} سجل)</span>
+            {t('reportPreview')}{' '}
+            <span className="text-slate-400 text-sm font-normal ml-2">({exportData.length} {t('recordCount')})</span>
           </h3>
           {exportData.length > 0 && (
             <button
               onClick={exportToCSV}
               className="text-sm flex items-center gap-2 text-teal-600 dark:text-teal-400 hover:underline print:hidden"
             >
-              <Download size={14} /> تصدير CSV
+              <Download size={14} /> {t('exportCsvBtn')}
             </button>
           )}
         </div>
@@ -346,7 +346,7 @@ export default function Reports() {
           {exportData.length === 0 && !exportLoading ? (
             <div className="px-6 py-16 text-center text-slate-500 dark:text-slate-400">
               <FileText size={48} className="mx-auto text-slate-300 dark:text-slate-600 mb-4" />
-              <p>اختر نوع التقرير واضغط «إنشاء التقرير» لعرض البيانات هنا</p>
+              <p>{t('emptyReportMsg')}</p>
             </div>
           ) : (
             <table className="w-full text-right text-sm">
@@ -377,16 +377,16 @@ export default function Reports() {
       <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm print:hidden">
         <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200 mb-1 flex items-center gap-2">
           <Upload size={18} className="text-violet-500" />
-          استيراد البيانات
+          {t('importData')}
         </h3>
         <p className="text-sm text-slate-500 dark:text-slate-400 mb-5">
-          ارفع ملف CSV لإضافة سجلات جديدة دفعةً واحدة. قم بتحميل النموذج أولاً للاطلاع على التنسيق المطلوب.
+          {t('importDataDesc')}
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* اختيار نوع الاستيراد */}
           <div className="space-y-3">
-            <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">نوع البيانات المراد استيرادها</label>
+            <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">{t('dataTypeToImport')}</label>
             <div className="flex gap-3">
               {importTypes.map(type => (
                 <label
@@ -416,13 +416,13 @@ export default function Reports() {
               className="w-full flex items-center justify-center gap-2 px-4 py-2.5 border border-dashed border-slate-300 dark:border-slate-600 rounded-xl text-sm text-slate-500 dark:text-slate-400 hover:border-violet-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
             >
               <FileDown size={16} />
-              تحميل نموذج CSV لـ «{importTypes.find(t => t.id === importType)?.label}»
+              {t('downloadCsvTemplateFor')} «{importTypes.find(type => type.id === importType)?.label}»
             </button>
           </div>
 
           {/* منطقة الرفع */}
           <div className="space-y-3">
-            <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">رفع ملف CSV</label>
+            <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">{t('uploadCsvFile')}</label>
 
             {/* Drop Zone */}
             <div
@@ -432,9 +432,9 @@ export default function Reports() {
               <Upload size={28} className="text-slate-300 dark:text-slate-600 group-hover:text-violet-500 transition-colors" />
               <div className="text-center">
                 <p className="text-sm font-medium text-slate-600 dark:text-slate-300">
-                  {importLoading ? 'جارٍ المعالجة...' : 'انقر لاختيار ملف CSV'}
+                  {importLoading ? t('processing') : t('clickToSelectCsv')}
                 </p>
-                <p className="text-xs text-slate-400 mt-1">الحد الأقصى: 5MB</p>
+                <p className="text-xs text-slate-400 mt-1">{t('maxSize5MB')}</p>
               </div>
               <input
                 ref={fileInputRef}
@@ -453,16 +453,16 @@ export default function Reports() {
                   ? 'bg-emerald-50 dark:bg-emerald-500/10 border-emerald-200 dark:border-emerald-500/30'
                   : 'bg-amber-50 dark:bg-amber-500/10 border-amber-200 dark:border-amber-500/30'
               }`}>
-                <p className="font-semibold text-slate-800 dark:text-slate-200 mb-1">نتيجة الاستيراد:</p>
+                <p className="font-semibold text-slate-800 dark:text-slate-200 mb-1">{t('importResultTitle')}</p>
                 <p className="text-slate-600 dark:text-slate-300">
-                  ✅ نجح: <strong>{importResult.success}</strong> سجل &nbsp;|&nbsp;
-                  ❌ فشل: <strong>{importResult.failed}</strong> سجل &nbsp;|&nbsp;
-                  المجموع: <strong>{importResult.total}</strong>
+                  ✅ {t('successCount')} <strong>{importResult.success}</strong> {t('recordCount')} &nbsp;|&nbsp;
+                  ❌ {t('failedCount')} <strong>{importResult.failed}</strong> {t('recordCount')} &nbsp;|&nbsp;
+                  {t('totalCount')} <strong>{importResult.total}</strong>
                 </p>
                 {importResult.errors.length > 0 && (
                   <ul className="mt-2 text-xs text-red-600 dark:text-red-400 space-y-0.5 list-disc list-inside">
                     {importResult.errors.slice(0, 5).map((e, i) => <li key={i}>{e}</li>)}
-                    {importResult.errors.length > 5 && <li>...وأخطاء أخرى ({importResult.errors.length - 5})</li>}
+                    {importResult.errors.length > 5 && <li>{t('andOtherErrors')} ({importResult.errors.length - 5})</li>}
                   </ul>
                 )}
               </div>

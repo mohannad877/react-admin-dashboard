@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useTranslation } from 'react-i18next';
 import { Plus, Edit2, Trash2, RefreshCw, Upload, FileDown, X, CheckCircle, AlertCircle } from 'lucide-react';
 import DataTable from '../../components/ui/DataTable';
 import { Button } from '../../components/ui/Button';
@@ -33,6 +34,7 @@ const PRODUCT_TEMPLATE = [
 ];
 
 const ImportModal = ({ onClose, onImported }) => {
+  const { t } = useTranslation();
   const fileInputRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
@@ -45,15 +47,15 @@ const ImportModal = ({ onClose, onImported }) => {
   const handleFile = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    if (!file.name.endsWith('.csv')) { alert('الرجاء اختيار ملف CSV.'); return; }
+    if (!file.name.endsWith('.csv')) { alert(t('selectCsvOnly')); return; }
     setLoading(true);
     setResult(null);
     try {
       const text = await readCSVFile(file);
       const { rows, headers } = csvToObjects(text);
-      if (!rows.length) { alert('الملف فارغ.'); return; }
+      if (!rows.length) { alert(t('emptyFileError')); return; }
       if (!headers.includes('id') || !headers.includes('name')) {
-        alert('يجب أن يحتوي الملف على أعمدة id و name على الأقل.');
+        alert(t('missingRequiredColumns'));
         return;
       }
       const processed = rows.map(row => ({
@@ -66,7 +68,7 @@ const ImportModal = ({ onClose, onImported }) => {
       setResult({ ...res, total: rows.length });
       if (res.failed === 0) onImported();
     } catch (err) {
-      alert('فشل معالجة الملف: ' + err.message);
+      alert(t('fileProcessFailed') + err.message);
     } finally {
       setLoading(false);
       e.target.value = '';
@@ -79,7 +81,7 @@ const ImportModal = ({ onClose, onImported }) => {
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-slate-700">
           <h2 className="font-bold text-lg text-slate-800 dark:text-slate-200 flex items-center gap-2">
-            <Upload size={18} className="text-violet-500" /> استيراد منتجات من CSV
+            <Upload size={18} className="text-violet-500" /> {t('importProductsCsv')}
           </h2>
           <button onClick={onClose} className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"><X size={18} /></button>
         </div>
@@ -87,24 +89,24 @@ const ImportModal = ({ onClose, onImported }) => {
         <div className="p-6 space-y-4">
           {/* Step 1 */}
           <div className="space-y-2">
-            <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">الخطوة 1: حمّل النموذج</p>
+            <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">{t('step1DownloadTemplate')}</p>
             <button
               onClick={downloadTemplate}
               className="w-full flex items-center justify-center gap-2 px-4 py-2.5 border border-dashed border-slate-300 dark:border-slate-600 rounded-xl text-sm text-slate-500 dark:text-slate-400 hover:border-violet-400 hover:text-violet-600 transition-colors"
             >
-              <FileDown size={16} /> تحميل نموذج CSV
+              <FileDown size={16} /> {t('downloadCsvTemplate')}
             </button>
           </div>
 
           {/* Step 2 */}
           <div className="space-y-2">
-            <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">الخطوة 2: ارفع الملف المعدّل</p>
+            <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">{t('step2UploadFile')}</p>
             <div
               onClick={() => !loading && fileInputRef.current?.click()}
               className="flex flex-col items-center justify-center gap-2 p-6 border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-xl cursor-pointer hover:border-violet-400 hover:bg-violet-50/50 dark:hover:bg-violet-500/5 transition-all"
             >
               <Upload size={24} className="text-slate-300 dark:text-slate-600" />
-              <p className="text-sm text-slate-500 dark:text-slate-400">{loading ? 'جارٍ المعالجة...' : 'انقر لاختيار ملف CSV'}</p>
+              <p className="text-sm text-slate-500 dark:text-slate-400">{loading ? t('processing') : t('clickToSelectCsv')}</p>
               <input ref={fileInputRef} type="file" accept=".csv" className="hidden" onChange={handleFile} disabled={loading} />
             </div>
           </div>
@@ -118,11 +120,11 @@ const ImportModal = ({ onClose, onImported }) => {
             }`}>
               <div className="flex items-center gap-2 font-semibold text-slate-800 dark:text-slate-200 mb-1">
                 {result.failed === 0
-                  ? <><CheckCircle size={16} className="text-emerald-500" /> تم الاستيراد بنجاح!</>
-                  : <><AlertCircle size={16} className="text-amber-500" /> اكتمل مع أخطاء</>}
+                  ? <><CheckCircle size={16} className="text-emerald-500" /> {t('importSuccessMsg')}</>
+                  : <><AlertCircle size={16} className="text-amber-500" /> {t('completedWithErrors')}</>}
               </div>
               <p className="text-slate-600 dark:text-slate-300">
-                ✅ نجح: <strong>{result.success}</strong> &nbsp;|&nbsp; ❌ فشل: <strong>{result.failed}</strong> &nbsp;|&nbsp; المجموع: <strong>{result.total}</strong>
+                ✅ {t('successCount')} <strong>{result.success}</strong> &nbsp;|&nbsp; ❌ {t('failedCount')} <strong>{result.failed}</strong> &nbsp;|&nbsp; {t('totalCount')} <strong>{result.total}</strong>
               </p>
               {result.errors.slice(0, 3).map((e, i) => <p key={i} className="text-xs text-red-500 mt-1">{e}</p>)}
             </div>
@@ -134,7 +136,7 @@ const ImportModal = ({ onClose, onImported }) => {
             onClick={onClose}
             className="w-full py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
           >
-            إغلاق
+            {t('close')}
           </button>
         </div>
       </div>
@@ -143,6 +145,7 @@ const ImportModal = ({ onClose, onImported }) => {
 };
 
 export default function ProductsPage() {
+  const { t } = useTranslation();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -162,7 +165,7 @@ export default function ProductsPage() {
       const data = await productRepository.getAll(params);
       setProducts(data);
     } catch {
-      setError('تعذّر الاتصال بالخادم. تأكد من تشغيل JSON Server.');
+      setError('{t('serverConnectionError')}');
     } finally {
       setLoading(false);
     }
@@ -259,15 +262,15 @@ export default function ProductsPage() {
   return (
     <div className="space-y-5">
       <Helmet>
-        <title>إدارة المنتجات | Admin Dashboard</title>
-        <meta name="description" content="عرض وإدارة المنتجات ومتابعة المخزون" />
+        <title>{t('productsManagement')} | Admin Dashboard</title>
+        <meta name="description" content="عرض و{t('productsManagement')} ومتابعة المخزون" />
       </Helmet>
 
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
         <div>
-          <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">إدارة المنتجات</h2>
+          <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">{t('productsManagement')}</h2>
           <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
-            {products.length} منتج في المخزون
+            {products.length} {t('productsInStock')}
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -276,10 +279,10 @@ export default function ProductsPage() {
             className="flex items-center gap-2 px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
           >
             <Upload size={16} className="text-violet-500" />
-            استيراد CSV
+            {t('importCsvBtn')}
           </button>
           <Button icon={Plus} onClick={() => setShowModal(true)}>
-            إضافة منتج
+            {t('addProduct')}
           </Button>
         </div>
       </div>
@@ -287,24 +290,24 @@ export default function ProductsPage() {
       {/* Filters */}
       <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4">
         <div className="flex flex-wrap items-center gap-3">
-          <span className="text-sm font-medium text-slate-600 dark:text-slate-400">تصفية:</span>
+          <span className="text-sm font-medium text-slate-600 dark:text-slate-400">{t('filter')}:</span>
 
           <select
             className="px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none"
             value={filters.category}
             onChange={(e) => setFilters(f => ({ ...f, category: e.target.value }))}
           >
-            <option value="">جميع التصنيفات</option>
-            <option value="electronics">إلكترونيات</option>
-            <option value="furniture">أثاث</option>
-            <option value="supplies">مستلزمات</option>
-            <option value="other">أخرى</option>
+            <option value="">{t('allCategories')}</option>
+            <option value="electronics">{t('catElectronics')}</option>
+            <option value="furniture">{t('catFurniture')}</option>
+            <option value="supplies">{t('catSupplies')}</option>
+            <option value="other">{t('catOther')}</option>
           </select>
 
           <div className="flex items-center gap-2">
             <input
               type="number"
-              placeholder="سعر من"
+              placeholder="{t('priceFrom')}"
               min="0"
               value={filters.minPrice}
               onChange={(e) => setFilters(f => ({ ...f, minPrice: e.target.value }))}
@@ -314,7 +317,7 @@ export default function ProductsPage() {
             <span className="text-slate-400 text-sm">—</span>
             <input
               type="number"
-              placeholder="إلى"
+              placeholder={t('priceTo')}
               min="0"
               value={filters.maxPrice}
               onChange={(e) => setFilters(f => ({ ...f, maxPrice: e.target.value }))}
@@ -329,7 +332,7 @@ export default function ProductsPage() {
               onClick={() => setFilters({ category: '', minPrice: '', maxPrice: '' })}
               className="px-3 py-2 text-sm text-teal-600 dark:text-teal-400 hover:underline"
             >
-              إعادة تعيين
+              {t('reset')}
             </button>
           )}
 
@@ -346,7 +349,7 @@ export default function ProductsPage() {
       {error ? (
         <div className="bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 rounded-xl p-6 text-center">
           <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>
-          <Button variant="outline" size="sm" onClick={fetchProducts} className="mt-3">إعادة المحاولة</Button>
+          <Button variant="outline" size="sm" onClick={fetchProducts} className="mt-3">{t('retry')}</Button>
         </div>
       ) : loading ? (
         <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
