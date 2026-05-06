@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useState, useMemo } from 'react';
 import { ChevronUp, ChevronDown, Search } from 'lucide-react';
 import { useDebounce } from '../../../application/hooks/useDebounce';
@@ -9,6 +10,7 @@ export default function DataTable({
   initialSort = { field: null, direction: 'asc' },
   onSort
 }) {
+  const { t } = useTranslation();
   const [search, setSearch] = useState('');
   const [sort, setSort] = useState(initialSort);
   const debouncedSearch = useDebounce(search, 300);
@@ -49,7 +51,7 @@ export default function DataTable({
           <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
           <input
             type="text"
-            placeholder="بحث..."
+            placeholder={t('searchPlaceholder')}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full pr-9 pl-4 py-2.5 rounded-lg border border-slate-200 

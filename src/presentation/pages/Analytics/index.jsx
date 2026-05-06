@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { AreaChart, Area, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
@@ -23,30 +24,31 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 // ─── بيانات ثابتة خارج الـ component ─────────────────────────────────────
+export default function Analytics() {
+  const { t } = useTranslation();
+  const [period, setPeriod] = useState('monthly');
+
 const revenueData = [
-  { name: 'يناير', revenue: 4000, profit: 2400 },
-  { name: 'فبراير', revenue: 3000, profit: 1398 },
-  { name: 'مارس', revenue: 2000, profit: 9800 },
-  { name: 'أبريل', revenue: 2780, profit: 3908 },
-  { name: 'مايو', revenue: 1890, profit: 4800 },
-  { name: 'يونيو', revenue: 2390, profit: 3800 },
-  { name: 'يوليو', revenue: 3490, profit: 4300 },
+  { name: t('jan'), revenue: 4000, profit: 2400 },
+  { name: t('feb'), revenue: 3000, profit: 1398 },
+  { name: t('mar'), revenue: 2000, profit: 9800 },
+  { name: t('apr'), revenue: 2780, profit: 3908 },
+  { name: t('may'), revenue: 1890, profit: 4800 },
+  { name: t('jun'), revenue: 2390, profit: 3800 },
+  { name: t('jul'), revenue: 3490, profit: 4300 },
 ];
 
 const deviceData = [
-  { name: 'موبايل', value: 65 },
-  { name: 'ديسكتوب', value: 25 },
-  { name: 'تابلت', value: 10 },
+  { name: t('mobile'), value: 65 },
+  { name: t('desktop'), value: 25 },
+  { name: t('tablet'), value: 10 },
 ];
 
-export default function Analytics() {
-  const [period, setPeriod] = useState('monthly');
-
-  const kpis = [
-    { title: 'إجمالي الإيرادات', value: '124,500', trend: '+14%', isUp: true, icon: DollarSign, color: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-50 dark:bg-emerald-500/10' },
-    { title: 'المستخدمين النشطين', value: '2,405', trend: '+5%', isUp: true, icon: Users, color: 'text-blue-600 dark:text-blue-400', bg: 'bg-blue-50 dark:bg-blue-500/10' },
-    { title: 'معدل التحويل', value: '4.6%', trend: '-1.2%', isUp: false, icon: Activity, color: 'text-amber-600 dark:text-amber-400', bg: 'bg-amber-50 dark:bg-amber-500/10' },
-    { title: 'متوسط الجلسة', value: '4m 32s', trend: '+12%', isUp: true, icon: TrendingUp, color: 'text-indigo-600 dark:text-indigo-400', bg: 'bg-indigo-50 dark:bg-indigo-500/10' },
+const kpis = [
+    { title: t('totalRevenue'), value: '124,500', trend: '+14%', isUp: true, icon: DollarSign, color: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-50 dark:bg-emerald-500/10' },
+    { title: t('users'), value: '2,405', trend: '+5%', isUp: true, icon: Users, color: 'text-blue-600 dark:text-blue-400', bg: 'bg-blue-50 dark:bg-blue-500/10' },
+    { title: t('conversionRate'), value: '4.6%', trend: '-1.2%', isUp: false, icon: Activity, color: 'text-amber-600 dark:text-amber-400', bg: 'bg-amber-50 dark:bg-amber-500/10' },
+    { title: t('avgSession'), value: '4m 32s', trend: '+12%', isUp: true, icon: TrendingUp, color: 'text-indigo-600 dark:text-indigo-400', bg: 'bg-indigo-50 dark:bg-indigo-500/10' },
   ];
 
   return (
@@ -58,8 +60,8 @@ export default function Analytics() {
       {/* Header & Controls */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">التحليلات المتقدمة</h2>
-          <p className="text-slate-500 dark:text-slate-400 mt-1 text-sm">أداء النظام والإيرادات عبر الزمن</p>
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">{t('advancedAnalytics')}</h2>
+          <p className="text-slate-500 dark:text-slate-400 mt-1 text-sm">{t('analyticsDesc')}</p>
         </div>
 
         <div className="flex items-center gap-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-1 shadow-sm">
@@ -73,7 +75,7 @@ export default function Analytics() {
                   : 'text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800'
               }`}
             >
-              {p === 'daily' ? 'يومي' : p === 'weekly' ? 'أسبوعي' : 'شهري'}
+              {p === 'daily' ? t('daily') : p === 'weekly' ? t('weekly') : t('monthly')}
             </button>
           ))}
           <div className="w-px h-6 bg-slate-200 dark:bg-slate-700 mx-1" />
@@ -100,7 +102,7 @@ export default function Analytics() {
               <span className={`font-semibold ${kpi.isUp ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'}`}>
                 {kpi.trend}
               </span>
-              <span className="text-slate-500 dark:text-slate-400 ml-2 text-xs">مقارنة بالفترة السابقة</span>
+              <span className="text-slate-500 dark:text-slate-400 ml-2 text-xs">{t('vsPreviousPeriod')}</span>
             </div>
           </div>
         ))}
@@ -111,7 +113,7 @@ export default function Analytics() {
 
         {/* Revenue Area Chart */}
         <div className="lg:col-span-2 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
-          <h3 className="font-bold text-slate-900 dark:text-slate-100 mb-6">الإيرادات والأرباح</h3>
+          <h3 className="font-bold text-slate-900 dark:text-slate-100 mb-6">{t('revenueAndProfit')}</h3>
           <div className="h-72">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={revenueData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
@@ -130,8 +132,8 @@ export default function Analytics() {
                 <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#64748b' }} />
                 <Tooltip content={CustomTooltip} />
                 <Legend iconType="circle" wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }} />
-                <Area type="monotone" name="الإيرادات" dataKey="revenue" stroke="#0D9488" strokeWidth={3} fillOpacity={1} fill="url(#colorRevenue)" />
-                <Area type="monotone" name="الأرباح" dataKey="profit" stroke="#3B82F6" strokeWidth={3} fillOpacity={1} fill="url(#colorProfit)" />
+                <Area type="monotone" name={t('revenueLabel')} dataKey="revenue" stroke="#0D9488" strokeWidth={3} fillOpacity={1} fill="url(#colorRevenue)" />
+                <Area type="monotone" name={t('profitLabel')} dataKey="profit" stroke="#3B82F6" strokeWidth={3} fillOpacity={1} fill="url(#colorProfit)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -139,7 +141,7 @@ export default function Analytics() {
 
         {/* Device Pie Chart */}
         <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
-          <h3 className="font-bold text-slate-900 dark:text-slate-100 mb-6">الأجهزة المستخدمة</h3>
+          <h3 className="font-bold text-slate-900 dark:text-slate-100 mb-6">{t('devicesUsed')}</h3>
           <div className="h-60 flex items-center justify-center relative">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -162,7 +164,7 @@ export default function Analytics() {
             </ResponsiveContainer>
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
               <span className="text-3xl font-bold text-slate-900 dark:text-slate-100">65%</span>
-              <span className="text-xs text-slate-500">موبايل</span>
+              <span className="text-xs text-slate-500">{t('mobile')}</span>
             </div>
           </div>
 

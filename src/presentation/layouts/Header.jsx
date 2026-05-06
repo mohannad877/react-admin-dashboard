@@ -17,9 +17,9 @@ export default function Header({ onMenuClick }) {
   
   // Fake notifications for demonstration
   const [notifications, setNotifications] = useState([
-    { id: 1, text: 'قام مستخدم جديد بالتسجيل في النظام', read: false, time: 'منذ 5 دقائق' },
-    { id: 2, text: 'منتج "شاشة 27 بوصة" اقترب من النفاد', read: false, time: 'منذ ساعة' },
-    { id: 3, text: 'تم تحديث سياسات الأمان بنجاح', read: true, time: 'منذ يومين' }
+    { id: 1, text: t('notifNewUser'), read: false, time: t('minsAgo5') },
+    { id: 2, text: t('notifLowStock'), read: false, time: t('hourAgo1') },
+    { id: 3, text: t('notifSecurityUpdated'), read: true, time: t('daysAgo2') }
   ]);
 
   const unreadCount = notifications.filter(n => !n.read).length;
