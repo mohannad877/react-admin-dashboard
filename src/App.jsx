@@ -18,19 +18,20 @@ const router = createBrowserRouter([
   // ─── مسارات لوحة التحكم (محمية بتسجيل الدخول) ───────────────────────
   {
     path: '/',
-    element: (
-      <ProtectedRoute>
-        <MainLayout />
-      </ProtectedRoute>
-    ),
+    element: <ProtectedRoute />,
     children: [
-      { index: true, element: <Dashboard /> },
-      { path: 'users', element: <Users /> },
-      { path: 'products', element: <Products /> },
-      { path: 'analytics', element: <ComingSoon /> },
-      { path: 'reports', element: <ComingSoon /> },
-      { path: 'settings', element: <ComingSoon /> },
-      { path: 'security', element: <ComingSoon /> },
+      {
+        element: <MainLayout />,
+        children: [
+          { index: true, element: <Dashboard /> },
+          { path: 'users', element: <Users /> },
+          { path: 'products', element: <Products /> },
+          { path: 'analytics', element: <ComingSoon /> },
+          { path: 'reports', element: <ComingSoon /> },
+          { path: 'settings', element: <ComingSoon /> },
+          { path: 'security', element: <ComingSoon /> },
+        ],
+      },
     ],
   },
 
