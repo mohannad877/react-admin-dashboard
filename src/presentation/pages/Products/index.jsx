@@ -12,7 +12,7 @@ import { objectsToCSV, downloadCSV, csvToObjects, readCSVFile } from '../../../s
 const StockBadge = ({ stock, minStockAlert = 10 }) => {
   const status = calculateProductStatus(stock, minStockAlert);
   const configs = {
-    available: { label: 'متوفر', cls: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400', dot: 'bg-emerald-500' },
+    available: { label: 'Available', cls: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400', dot: 'bg-emerald-500' },
     low_stock: { label: 'منخفض', cls: 'bg-amber-100 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400', dot: 'bg-amber-500' },
     out_of_stock: { label: 'منفذ', cls: 'bg-red-100 text-red-700 dark:bg-red-500/10 dark:text-red-400', dot: 'bg-red-500' },
   };
@@ -197,7 +197,7 @@ export default function ProductsPage() {
   const columns = [
     {
       field: 'name',
-      header: 'المنتج',
+      header: t('productHeader'),
       sortable: true,
       cell: (p) => (
         <div className="flex items-center gap-3">
@@ -213,7 +213,7 @@ export default function ProductsPage() {
     },
     {
       field: 'category',
-      header: 'التصنيف',
+      header: t('categoryHeader'),
       sortable: true,
       cell: (p) => (
         <span className="inline-flex px-2.5 py-1 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-lg text-xs font-medium">
@@ -223,7 +223,7 @@ export default function ProductsPage() {
     },
     {
       field: 'price',
-      header: 'السعر',
+      header: t('priceHeader'),
       sortable: true,
       cell: (p) => (
         <span className="font-semibold text-slate-900 dark:text-slate-100">{formatPrice(p.price)}</span>
@@ -231,13 +231,13 @@ export default function ProductsPage() {
     },
     {
       field: 'stock',
-      header: 'المخزون',
+      header: t('stockHeader'),
       sortable: true,
       cell: (p) => <StockBadge stock={p.stock} minStockAlert={p.minStockAlert} />
     },
     {
       field: 'actions',
-      header: 'الإجراءات',
+      header: t('actionsHeader'),
       cell: (p) => (
         <div className="flex items-center gap-1">
           <button
