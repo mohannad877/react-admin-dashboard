@@ -122,14 +122,20 @@ npm run dev:all
 ✅ State:          Context API
 ✅ Charts:         Recharts
 ✅ Icons:          Lucide React
-✅ HTTP Client:    Axios
-✅ Mock API:       JSON Server (محلي) / MockAPI.io (سحابي)
+✅ Database:       Supabase (PostgreSQL للإنتاج) / JSON Server (للتطوير المحلي)
+✅ Authentication: Firebase Auth
 ✅ Deployment:     Vercel (SPA-ready with vercel.json)
 ✅ Language:       JavaScript
 ✅ Font:           Tajawal (Google Fonts) for Arabic
 ```
 
 ### 🚀 التشغيل المحلي
+
+#### إعداد بيئة التطوير
+قم بنسخ ملف `.env.example` إلى `.env.local` وأضف مفاتيحك الخاصة لتشغيل بيئة الإنتاج محلياً:
+```bash
+cp .env.example .env.local
+```
 
 #### خطوات التثبيت
 

@@ -1,0 +1,15 @@
+{
+  "dashboard": "Tableau de bord",
+  "users": "Gestion des utilisateurs",
+  "products": "Gestion des produits",
+  "search": "Rechercher...",
+  "darkMode": "Mode sombre",
+  "lightMode": "Mode clair",
+  "totalUsers": "Total utilisateurs",
+  "activeUsers": "Utilisateurs actifs",
+  "totalProducts": "Total produits",
+  "lowStock": "Stock faible",
+  "admin": "Administrateur",
+  "language": "العربية",
+  "welcome": "Bienvenue, Administrateur 👋"
+}

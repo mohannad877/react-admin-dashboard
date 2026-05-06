@@ -5,6 +5,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 // Import locales directly for initial load (optional, but good for SPA without backend i18n hosting)
 import arTranslation from '../../locales/ar/translation.json';
 import enTranslation from '../../locales/en/translation.json';
+import frTranslation from '../../locales/fr/translation.json';
 
 i18n
   .use(LanguageDetector)
@@ -12,7 +13,8 @@ i18n
   .init({
     resources: {
       ar: { translation: arTranslation },
-      en: { translation: enTranslation }
+      en: { translation: enTranslation },
+      fr: { translation: frTranslation }
     },
     fallbackLng: 'ar',
     interpolation: {
@@ -25,7 +27,9 @@ i18n
 
 export const switchLanguage = (lang) => {
   i18n.changeLanguage(lang);
-  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  // RTL languages: Arabic only (Urdu/Persian would also be RTL)
+  const isRTL = lang === 'ar';
+  document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
   document.documentElement.lang = lang;
 };
 

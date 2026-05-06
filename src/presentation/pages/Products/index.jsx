@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Plus, Edit2, Trash2, RefreshCw } from 'lucide-react';
 import DataTable from '../../components/ui/DataTable';
 import { Button } from '../../components/ui/Button';
@@ -139,6 +140,11 @@ export default function ProductsPage() {
 
   return (
     <div className="space-y-5">
+      <Helmet>
+        <title>إدارة المنتجات | Admin Dashboard</title>
+        <meta name="description" content="عرض وإدارة المنتجات ومتابعة المخزون" />
+      </Helmet>
+
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
         <div>
           <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">إدارة المنتجات</h2>

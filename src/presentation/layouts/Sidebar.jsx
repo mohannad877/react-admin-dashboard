@@ -101,7 +101,12 @@ export default function Sidebar({ collapsed, onToggle, className = '' }) {
           )}
         </button>
         <button
-          onClick={() => switchLanguage(i18n.language.startsWith('ar') ? 'en' : 'ar')}
+          onClick={() => {
+            // Cycle: ar → en → fr → ar
+            const cycle = { ar: 'en', en: 'fr', fr: 'ar' };
+            const current = i18n.language.split('-')[0]; // handle 'ar-SA' etc
+            switchLanguage(cycle[current] || 'en');
+          }}
           title={t('language')}
           className={`flex items-center gap-3 px-3 py-2.5 w-full rounded-lg text-sm font-medium
             text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800
@@ -110,7 +115,11 @@ export default function Sidebar({ collapsed, onToggle, className = '' }) {
           `}
         >
           <Globe size={18} className="text-blue-500 flex-shrink-0" />
-          {!collapsed && <span>{t('language')}</span>}
+          {!collapsed && (
+            <span>
+              {i18n.language.startsWith('ar') ? 'EN' : i18n.language.startsWith('en') ? 'FR' : 'عربي'}
+            </span>
+          )}
         </button>
       </div>
     </aside>

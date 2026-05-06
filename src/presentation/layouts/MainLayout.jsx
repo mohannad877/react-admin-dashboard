@@ -2,10 +2,13 @@ import { Outlet } from 'react-router-dom';
 import { useState } from 'react';
 import Sidebar from './Sidebar';
 import Header from './Header';
+import { useAnalytics } from '../../application/hooks/useAnalytics';
 
 export default function MainLayout() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useAnalytics(import.meta.env.VITE_GA_ID);
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex" dir="rtl">

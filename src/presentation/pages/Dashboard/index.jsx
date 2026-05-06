@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Users, Package, AlertTriangle, TrendingUp, ShoppingCart, Activity } from 'lucide-react';
 import { userRepository } from '../../../infrastructure/repositories/UserRepository';
 import { productRepository } from '../../../infrastructure/repositories/ProductRepository';
@@ -131,6 +132,11 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-6">
+      <Helmet>
+        <title>لوحة التحكم | Admin Dashboard</title>
+        <meta name="description" content="نظرة عامة شاملة على إحصائيات المستخدمين والمنتجات والأداء." />
+      </Helmet>
+
       {/* Page Header */}
       <div>
         <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">مرحباً، المسؤول 👋</h2>
