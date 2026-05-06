@@ -1,37 +1,59 @@
 import { useState } from 'react';
-import { Menu, Bell, LogOut, ChevronDown } from 'lucide-react';
+import { Menu, Bell, LogOut, ChevronDown, Check } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import { useTenant } from '../../application/contexts/TenantProvider';
 import { useAuth } from '../../application/contexts/AuthContext';
-
-const pageTitles = {
-  '/': 'لوحة التحكم',
-  '/users': 'إدارة المستخدمين',
-  '/products': 'إدارة المنتجات',
-};
+import { useTranslation } from 'react-i18next';
 
 export default function Header({ onMenuClick }) {
   const location = useLocation();
   const { config } = useTenant();
   const { currentUser, logout } = useAuth();
+  const { t } = useTranslation();
+  
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
+  
+  // Fake notifications for demonstration
+  const [notifications, setNotifications] = useState([
+    { id: 1, text: 'قام مستخدم جديد بالتسجيل في النظام', read: false, time: 'منذ 5 دقائق' },
+    { id: 2, text: 'منتج "شاشة 27 بوصة" اقترب من النفاد', read: false, time: 'منذ ساعة' },
+    { id: 3, text: 'تم تحديث سياسات الأمان بنجاح', read: true, time: 'منذ يومين' }
+  ]);
 
-  const title = pageTitles[location.pathname] || 'لوحة التحكم';
+  const unreadCount = notifications.filter(n => !n.read).length;
+
+  const markAllAsRead = () => {
+    setNotifications(notifications.map(n => ({ ...n, read: true })));
+  };
+
+  const pageKeys = {
+    '/': 'dashboard',
+    '/users': 'users',
+    '/products': 'products',
+    '/analytics': 'analytics',
+    '/reports': 'reports',
+    '/settings': 'settings',
+    '/security': 'security',
+  };
+
+  const titleKey = pageKeys[location.pathname] || 'dashboard';
+  const title = t(titleKey);
 
   // استخرج الأحرف الأولى للصورة الرمزية
   const getInitials = (name) => {
-    if (!name) return 'م';
+    if (!name) return 'A';
     const parts = name.trim().split(' ');
     return parts.length >= 2 ? parts[0][0] + parts[1][0] : parts[0][0];
   };
 
-  const displayName = currentUser?.displayName || 'المسؤول';
+  const displayName = currentUser?.displayName || t('admin');
   const displayEmail = currentUser?.email || 'admin@company.sa';
   const initials = getInitials(displayName);
 
   const handleLogout = async () => {
-    if (!window.confirm('هل أنت متأكد من تسجيل الخروج؟')) return;
+    if (!window.confirm(t('confirmLogout'))) return;
     setLoggingOut(true);
     try {
       await logout();
@@ -67,14 +89,50 @@ export default function Header({ onMenuClick }) {
 
         {/* Left: Notifications + User Menu */}
         <div className="flex items-center gap-2">
-          {/* Notifications Bell */}
-          <button
-            className="relative p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-500 dark:text-slate-400"
-            aria-label="الإشعارات"
-          >
-            <Bell size={18} />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full" />
-          </button>
+          
+          {/* Notifications Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => setShowNotifications(!showNotifications)}
+              className="relative p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-500 dark:text-slate-400"
+              aria-label={t('notifications')}
+            >
+              <Bell size={18} />
+              {unreadCount > 0 && (
+                <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+              )}
+            </button>
+
+            {showNotifications && (
+              <>
+                <div className="fixed inset-0 z-40" onClick={() => setShowNotifications(false)} aria-hidden="true" />
+                <div className="absolute left-0 top-full mt-2 w-72 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-xl z-50 overflow-hidden">
+                  <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center">
+                    <p className="text-sm font-bold text-slate-900 dark:text-slate-100">{t('notifications')}</p>
+                    {unreadCount > 0 && (
+                      <button onClick={markAllAsRead} className="text-xs text-teal-600 dark:text-teal-400 hover:underline">
+                        {t('markAllAsRead')}
+                      </button>
+                    )}
+                  </div>
+                  <div className="max-h-64 overflow-y-auto">
+                    {notifications.length > 0 ? (
+                      notifications.map(notification => (
+                        <div key={notification.id} className={`px-4 py-3 border-b border-slate-50 dark:border-slate-700 last:border-0 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors ${!notification.read ? 'bg-teal-50/50 dark:bg-teal-900/20' : ''}`}>
+                          <p className={`text-sm ${!notification.read ? 'font-semibold text-slate-900 dark:text-slate-100' : 'text-slate-600 dark:text-slate-300'}`}>{notification.text}</p>
+                          <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">{notification.time}</p>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="px-4 py-6 text-center text-slate-500 dark:text-slate-400 text-sm">
+                        {t('noNotifications')}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
 
           {/* User Dropdown */}
           <div className="relative">
@@ -125,7 +183,7 @@ export default function Header({ onMenuClick }) {
                       className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors disabled:opacity-50"
                     >
                       <LogOut size={15} />
-                      <span>{loggingOut ? 'جارٍ الخروج...' : 'تسجيل الخروج'}</span>
+                      <span>{loggingOut ? t('loggingOut') : t('logout')}</span>
                     </button>
                   </div>
                 </div>

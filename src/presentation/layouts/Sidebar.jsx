@@ -1,11 +1,8 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Users, Package, Moon, Sun, ChevronRight, ChevronLeft, BarChart3 } from 'lucide-react';
+import { LayoutDashboard, Users, Package, Moon, Sun, ChevronRight, ChevronLeft, BarChart3, LineChart, FileText, Settings, ShieldCheck, Globe } from 'lucide-react';
 import { useTheme } from '../../application/contexts/ThemeContext';
 import { useTranslation } from 'react-i18next';
 import { switchLanguage } from '../../shared/config/i18n';
-import { Globe } from 'lucide-react';
-
-
 
 export default function Sidebar({ collapsed, onToggle, className = '' }) {
   const { isDark, toggleTheme } = useTheme();
@@ -15,6 +12,10 @@ export default function Sidebar({ collapsed, onToggle, className = '' }) {
     { name: t('dashboard'), href: '/', icon: LayoutDashboard },
     { name: t('users'), href: '/users', icon: Users },
     { name: t('products'), href: '/products', icon: Package },
+    { name: t('analytics'), href: '/analytics', icon: LineChart },
+    { name: t('reports'), href: '/reports', icon: FileText },
+    { name: t('settings'), href: '/settings', icon: Settings },
+    { name: t('security'), href: '/security', icon: ShieldCheck },
   ];
   
   return (
@@ -36,13 +37,13 @@ export default function Sidebar({ collapsed, onToggle, className = '' }) {
             <div className="w-8 h-8 bg-teal-600 rounded-lg flex items-center justify-center">
               <BarChart3 size={16} className="text-white" />
             </div>
-            <span className="font-bold text-slate-900 dark:text-slate-100 text-lg">داشبورد</span>
+            <span className="font-bold text-slate-900 dark:text-slate-100 text-lg">Admin</span>
           </div>
         )}
         <button 
           onClick={onToggle} 
           className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-500 dark:text-slate-400"
-          aria-label={collapsed ? 'توسيع القائمة' : 'طي القائمة'}
+          aria-label={collapsed ? 'Expand' : 'Collapse'}
         >
           {collapsed ? <ChevronLeft size={18} /> : <ChevronRight size={18} />}
         </button>
@@ -52,7 +53,7 @@ export default function Sidebar({ collapsed, onToggle, className = '' }) {
       <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
         {!collapsed && (
           <p className="text-xs font-semibold text-slate-400 dark:text-slate-500 px-3 mb-2 uppercase tracking-wider">
-            القائمة الرئيسية
+            {t('mainMenu')}
           </p>
         )}
         {navigation.map((item) => {
@@ -84,20 +85,20 @@ export default function Sidebar({ collapsed, onToggle, className = '' }) {
       <div className="p-3 border-t border-slate-200 dark:border-slate-800">
         <button
           onClick={toggleTheme}
-          title={isDark ? 'الوضع الفاتح' : 'الوضع الليلي'}
+          title={isDark ? t('lightMode') : t('darkMode')}
           className={`flex items-center gap-3 px-3 py-2.5 w-full rounded-lg text-sm font-medium
             text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800
             transition-colors duration-150
             ${collapsed ? 'justify-center' : ''}
           `}
-          aria-label={isDark ? 'تفعيل الوضع الفاتح' : 'تفعيل الوضع الليلي'}
+          aria-label={isDark ? t('lightMode') : t('darkMode')}
         >
           {isDark 
             ? <Sun size={18} className="text-amber-500 flex-shrink-0" /> 
             : <Moon size={18} className="text-slate-500 flex-shrink-0" />
           }
           {!collapsed && (
-            <span>{isDark ? 'الوضع الفاتح' : 'الوضع الليلي'}</span>
+            <span>{isDark ? t('lightMode') : t('darkMode')}</span>
           )}
         </button>
         <button
@@ -117,7 +118,7 @@ export default function Sidebar({ collapsed, onToggle, className = '' }) {
           <Globe size={18} className="text-blue-500 flex-shrink-0" />
           {!collapsed && (
             <span>
-              {i18n.language.startsWith('ar') ? 'EN' : i18n.language.startsWith('en') ? 'FR' : 'عربي'}
+              {t('language')}
             </span>
           )}
         </button>

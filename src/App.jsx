@@ -1,9 +1,10 @@
 import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
 import MainLayout from './presentation/layouts/MainLayout';
 import Dashboard from './presentation/pages/Dashboard';
-import UsersPage from './presentation/pages/Users';
-import ProductsPage from './presentation/pages/Products';
+import Users from './presentation/pages/Users';
+import Products from './presentation/pages/Products';
 import Login from './presentation/pages/Auth/Login';
+import ComingSoon from './presentation/pages/ComingSoon';
 import ProtectedRoute from './presentation/components/shared/ProtectedRoute';
 import NotFound from './presentation/pages/NotFound';
 
@@ -17,16 +18,19 @@ const router = createBrowserRouter([
   // ─── مسارات لوحة التحكم (محمية بتسجيل الدخول) ───────────────────────
   {
     path: '/',
-    element: <ProtectedRoute />,
+    element: (
+      <ProtectedRoute>
+        <MainLayout />
+      </ProtectedRoute>
+    ),
     children: [
-      {
-        element: <MainLayout />,
-        children: [
-          { index: true, element: <Dashboard /> },
-          { path: 'users', element: <UsersPage /> },
-          { path: 'products', element: <ProductsPage /> },
-        ],
-      },
+      { index: true, element: <Dashboard /> },
+      { path: 'users', element: <Users /> },
+      { path: 'products', element: <Products /> },
+      { path: 'analytics', element: <ComingSoon /> },
+      { path: 'reports', element: <ComingSoon /> },
+      { path: 'settings', element: <ComingSoon /> },
+      { path: 'security', element: <ComingSoon /> },
     ],
   },
 

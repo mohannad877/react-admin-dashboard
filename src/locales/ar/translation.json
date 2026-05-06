@@ -2,6 +2,11 @@
   "dashboard": "لوحة التحكم",
   "users": "إدارة المستخدمين",
   "products": "إدارة المنتجات",
+  "analytics": "التحليلات",
+  "reports": "التقارير",
+  "settings": "الإعدادات",
+  "security": "الأمان",
+  "mainMenu": "القائمة الرئيسية",
   "search": "بحث...",
   "darkMode": "الوضع الليلي",
   "lightMode": "الوضع الفاتح",
@@ -11,5 +16,13 @@
   "lowStock": "مخزون منخفض",
   "admin": "مسؤول",
   "language": "English",
-  "welcome": "مرحباً، المسؤول 👋"
+  "welcome": "مرحباً، المسؤول 👋",
+  "notifications": "الإشعارات",
+  "noNotifications": "لا توجد إشعارات جديدة",
+  "markAllAsRead": "تحديد الكل كمقروء",
+  "logout": "تسجيل الخروج",
+  "loggingOut": "جارٍ الخروج...",
+  "confirmLogout": "هل أنت متأكد من تسجيل الخروج؟",
+  "comingSoon": "قريباً",
+  "comingSoonDesc": "هذه الميزة قيد التطوير وستتوفر قريباً!"
 }

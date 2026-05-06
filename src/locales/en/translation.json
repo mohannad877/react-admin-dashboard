@@ -2,6 +2,11 @@
   "dashboard": "Dashboard",
   "users": "User Management",
   "products": "Product Management",
+  "analytics": "Analytics",
+  "reports": "Reports",
+  "settings": "Settings",
+  "security": "Security",
+  "mainMenu": "Main Menu",
   "search": "Search...",
   "darkMode": "Dark Mode",
   "lightMode": "Light Mode",
@@ -11,5 +16,13 @@
   "lowStock": "Low Stock",
   "admin": "Admin",
   "language": "عربي",
-  "welcome": "Welcome, Admin 👋"
+  "welcome": "Welcome, Admin 👋",
+  "notifications": "Notifications",
+  "noNotifications": "No new notifications",
+  "markAllAsRead": "Mark all as read",
+  "logout": "Logout",
+  "loggingOut": "Logging out...",
+  "confirmLogout": "Are you sure you want to logout?",
+  "comingSoon": "Coming Soon",
+  "comingSoonDesc": "This feature is under development and will be available soon!"
 }

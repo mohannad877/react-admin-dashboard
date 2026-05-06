@@ -2,6 +2,11 @@
   "dashboard": "Tableau de bord",
   "users": "Gestion des utilisateurs",
   "products": "Gestion des produits",
+  "analytics": "Analytique",
+  "reports": "Rapports",
+  "settings": "Paramètres",
+  "security": "Sécurité",
+  "mainMenu": "Menu principal",
   "search": "Rechercher...",
   "darkMode": "Mode sombre",
   "lightMode": "Mode clair",
@@ -11,5 +16,13 @@
   "lowStock": "Stock faible",
   "admin": "Administrateur",
   "language": "العربية",
-  "welcome": "Bienvenue, Administrateur 👋"
+  "welcome": "Bienvenue, Administrateur 👋",
+  "notifications": "Notifications",
+  "noNotifications": "Aucune nouvelle notification",
+  "markAllAsRead": "Tout marquer comme lu",
+  "logout": "Déconnexion",
+  "loggingOut": "Déconnexion...",
+  "confirmLogout": "Êtes-vous sûr de vouloir vous déconnecter ?",
+  "comingSoon": "À venir",
+  "comingSoonDesc": "Cette fonctionnalité est en cours de développement et sera bientôt disponible !"
 }
