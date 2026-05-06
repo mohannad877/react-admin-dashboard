@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Plus, Edit2, Trash2, RefreshCw } from 'lucide-react';
@@ -8,6 +9,7 @@ import { translateRole, formatDate } from '../../../shared/utils/helpers';
 import UserModal from '../../components/users/UserModal';
 
 export default function UsersPage() {
+  const { t } = useTranslation();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -62,7 +64,7 @@ export default function UsersPage() {
   const columns = [
     {
       field: 'name',
-      header: 'المستخدم',
+      header: t('userHeader'),
       sortable: true,
       cell: (user) => (
         <div className="flex items-center gap-3">
@@ -81,7 +83,7 @@ export default function UsersPage() {
     },
     {
       field: 'role',
-      header: 'الدور',
+      header: t('roleHeader'),
       sortable: true,
       cell: (user) => (
         <span className={`inline-flex px-2.5 py-1 rounded-full text-xs font-semibold ${
@@ -112,7 +114,7 @@ export default function UsersPage() {
     },
     {
       field: 'department',
-      header: 'القسم',
+      header: t('departmentHeader'),
       sortable: true,
       cell: (user) => (
         <span className="text-slate-700 dark:text-slate-300">{user.department || '—'}</span>
@@ -153,33 +155,33 @@ export default function UsersPage() {
   return (
     <div className="space-y-5">
       <Helmet>
-        <title>إدارة المستخدمين | Admin Dashboard</title>
+        <title>{t('usersManagement')} | Admin Dashboard</title>
         <meta name="description" content="عرض وتعديل وحذف حسابات المستخدمين" />
       </Helmet>
 
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
         <div>
-          <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">إدارة المستخدمين</h2>
+          <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">{t('usersManagement')}</h2>
           <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
-            {users.length} مستخدم مسجل
+            {users.length} {t('registeredUsers')}
           </p>
         </div>
         <Button icon={Plus} onClick={() => setShowModal(true)}>
-          إضافة مستخدم
+          {t('addUser')}
         </Button>
       </div>
 
       {/* Filters */}
       <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4">
         <div className="flex flex-wrap items-center gap-3">
-          <span className="text-sm font-medium text-slate-600 dark:text-slate-400">تصفية:</span>
+          <span className="text-sm font-medium text-slate-600 dark:text-slate-400">{t('filter')}:</span>
           <select
             className="px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none"
             value={filters.role}
             onChange={(e) => setFilters(f => ({ ...f, role: e.target.value }))}
           >
-            <option value="">جميع الأدوار</option>
+            <option value="">{t('allRoles')}</option>
             <option value="admin">مدير</option>
             <option value="editor">محرر</option>
             <option value="viewer">مطلع</option>
@@ -190,7 +192,7 @@ export default function UsersPage() {
             value={filters.status}
             onChange={(e) => setFilters(f => ({ ...f, status: e.target.value }))}
           >
-            <option value="">جميع الحالات</option>
+            <option value="">{t('allStatuses')}</option>
             <option value="active">نشط</option>
             <option value="inactive">غير نشط</option>
           </select>

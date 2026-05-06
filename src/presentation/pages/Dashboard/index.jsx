@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useState, useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Users, Package, AlertTriangle, Activity } from 'lucide-react';
@@ -9,12 +10,12 @@ import {
 } from 'recharts';
 
 const userGrowthData = [
-  { month: 'يناير', count: 8 },
-  { month: 'فبراير', count: 14 },
-  { month: 'مارس', count: 19 },
-  { month: 'أبريل', count: 28 },
-  { month: 'مايو', count: 35 },
-  { month: 'يونيو', count: 42 },
+  { month: 'jan', count: 8 },
+  { month: 'feb', count: 14 },
+  { month: 'mar', count: 19 },
+  { month: 'apr', count: 28 },
+  { month: 'may', count: 35 },
+  { month: 'jun', count: 42 },
 ];
 
 const COLORS = ['#0D9488', '#94a3b8', '#F59E0B', '#EF4444'];
@@ -36,6 +37,7 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 export default function Dashboard() {
+  const { t } = useTranslation();
   const [users, setUsers] = useState([]);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -58,9 +60,13 @@ export default function Dashboard() {
     fetchData();
   }, []);
 
+  const formattedUserGrowthData = useMemo(() => {
+    return userGrowthData.map(item => ({ ...item, month: t(item.month) }));
+  }, [t]);
+
   const stats = useMemo(() => [
     { 
-      title: 'إجمالي المستخدمين', 
+      title: t('totalUsers'), 
       value: users.length, 
       icon: Users, 
       trend: '+12%', 
@@ -69,7 +75,7 @@ export default function Dashboard() {
       bg: 'bg-teal-50 dark:bg-teal-500/10',
     },
     { 
-      title: 'المستخدمين النشطين', 
+      title: t('users'), 
       value: users.filter(u => u.status === 'active').length, 
       icon: Activity, 
       trend: '+8%', 
@@ -78,7 +84,7 @@ export default function Dashboard() {
       bg: 'bg-emerald-50 dark:bg-emerald-500/10',
     },
     { 
-      title: 'إجمالي المنتجات', 
+      title: t('totalProducts'), 
       value: products.length, 
       icon: Package, 
       trend: '+3', 
@@ -87,10 +93,10 @@ export default function Dashboard() {
       bg: 'bg-blue-50 dark:bg-blue-500/10',
     },
     { 
-      title: 'مخزون منخفض', 
+      title: t('lowStock'), 
       value: products.filter(p => p.stock <= 10 && p.stock > 0).length, 
       icon: AlertTriangle, 
-      trend: 'تنبيه', 
+      trend: t('alertLabel'), 
       positive: false,
       color: 'text-amber-600 dark:text-amber-400',
       bg: 'bg-amber-50 dark:bg-amber-500/10',
@@ -99,8 +105,8 @@ export default function Dashboard() {
 
   const productCategoryData = useMemo(() => {
     const categories = products.reduce((acc, p) => {
-      const labels = { electronics: 'إلكترونيات', furniture: 'أثاث', supplies: 'مستلزمات', other: 'أخرى' };
-      const cat = labels[p.category] || 'أخرى';
+      const labels = { electronics: t('catElectronics'), furniture: t('catFurniture'), supplies: t('catSupplies'), other: t('catOther') };
+      const cat = labels[p.category] || t('catOther');
       acc[cat] = (acc[cat] || 0) + 1;
       return acc;
     }, {});
@@ -108,8 +114,8 @@ export default function Dashboard() {
   }, [products]);
 
   const userStatusData = useMemo(() => [
-    { name: 'نشط', value: users.filter(u => u.status === 'active').length },
-    { name: 'غير نشط', value: users.filter(u => u.status === 'inactive').length }
+    { name: t('activeStatus'), value: users.filter(u => u.status === 'active').length },
+    { name: t('inactiveStatus'), value: users.filter(u => u.status === 'inactive').length }
   ], [users]);
 
   if (loading) {
@@ -139,8 +145,8 @@ export default function Dashboard() {
 
       {/* Page Header */}
       <div>
-        <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">مرحباً، المسؤول 👋</h2>
-        <p className="text-slate-500 dark:text-slate-400 mt-1 text-sm">نظرة عامة على إحصائيات النظام</p>
+        <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">{t('welcomeAdmin')}</h2>
+        <p className="text-slate-500 dark:text-slate-400 mt-1 text-sm">{t('dashboardDesc')}</p>
       </div>
       
       {/* Stats Cards */}
@@ -175,11 +181,11 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Area Chart - User Growth */}
         <div className="lg:col-span-2 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
-          <h3 className="font-semibold text-slate-900 dark:text-slate-100 mb-1">نمو المستخدمين</h3>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">آخر 6 أشهر</p>
+          <h3 className="font-semibold text-slate-900 dark:text-slate-100 mb-1">{t('userGrowth')}</h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">{t('last6Months')}</p>
           <div className="h-56">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={userGrowthData} margin={{ top: 5, right: 5, left: -25, bottom: 0 }}>
+              <AreaChart data={formattedUserGrowthData} margin={{ top: 5, right: 5, left: -25, bottom: 0 }}>
                 <defs>
                   <linearGradient id="colorCount" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#0d9488" stopOpacity={0.25}/>
@@ -198,8 +204,8 @@ export default function Dashboard() {
 
         {/* Bar Chart - Product Categories */}
         <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
-          <h3 className="font-semibold text-slate-900 dark:text-slate-100 mb-1">المنتجات حسب التصنيف</h3>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">توزيع المخزون</p>
+          <h3 className="font-semibold text-slate-900 dark:text-slate-100 mb-1">{t('productsByCategory')}</h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">{t('stockDistribution')}</p>
           <div className="h-56">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={productCategoryData} margin={{ top: 5, right: 5, left: -25, bottom: 0 }}>
@@ -215,8 +221,8 @@ export default function Dashboard() {
 
         {/* Pie Chart - User Status */}
         <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
-          <h3 className="font-semibold text-slate-900 dark:text-slate-100 mb-1">حالة المستخدمين</h3>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">نشط / غير نشط</p>
+          <h3 className="font-semibold text-slate-900 dark:text-slate-100 mb-1">{t('usersStatus')}</h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">{t('activeInactive')}</p>
           <div className="h-56">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>

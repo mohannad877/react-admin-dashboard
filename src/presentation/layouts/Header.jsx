@@ -17,9 +17,9 @@ export default function Header({ onMenuClick }) {
   
   // Fake notifications for demonstration
   const [notifications, setNotifications] = useState([
-    { id: 1, text: t('notifNewUser'), read: false, time: t('minsAgo5') },
-    { id: 2, text: t('notifLowStock'), read: false, time: t('hourAgo1') },
-    { id: 3, text: t('notifSecurityUpdated'), read: true, time: t('daysAgo2') }
+    { id: 1, text: 'notifNewUser', read: false, time: 'minsAgo5' },
+    { id: 2, text: 'notifLowStock', read: false, time: 'hourAgo1' },
+    { id: 3, text: 'notifSecurityUpdated', read: true, time: 'daysAgo2' }
   ]);
 
   const unreadCount = notifications.filter(n => !n.read).length;
@@ -119,8 +119,8 @@ export default function Header({ onMenuClick }) {
                     {notifications.length > 0 ? (
                       notifications.map(notification => (
                         <div key={notification.id} className={`px-4 py-3 border-b border-slate-50 dark:border-slate-700 last:border-0 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors ${!notification.read ? 'bg-teal-50/50 dark:bg-teal-900/20' : ''}`}>
-                          <p className={`text-sm ${!notification.read ? 'font-semibold text-slate-900 dark:text-slate-100' : 'text-slate-600 dark:text-slate-300'}`}>{notification.text}</p>
-                          <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">{notification.time}</p>
+                          <p className={`text-sm ${!notification.read ? 'font-semibold text-slate-900 dark:text-slate-100' : 'text-slate-600 dark:text-slate-300'}`}>{notification.isI18n ? t(notification.text) : notification.text}</p>
+                          <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">{notification.isI18n ? t(notification.time) : notification.time}</p>
                         </div>
                       ))
                     ) : (
