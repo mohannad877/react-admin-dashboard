@@ -10,9 +10,9 @@ const mockColumns = [
 ];
 
 const mockData = [
-  { id: '1', name: 'فاطمة الحربي', email: 'fatima@company.sa', role: 'admin' },
-  { id: '2', name: 'محمد العمري', email: 'mohammed@company.sa', role: 'editor' },
-  { id: '3', name: 'سارة الشمري', email: 'sara@company.sa', role: 'viewer' },
+  { id: '1', name: 'فاطمة الحربي', email: 'fatima@company.com', role: 'admin' },
+  { id: '2', name: 'محمد العمري', email: 'mohammed@company.com', role: 'editor' },
+  { id: '3', name: 'سارة الشمري', email: 'sara@company.com', role: 'viewer' },
 ];
 
 describe('DataTable Component', () => {

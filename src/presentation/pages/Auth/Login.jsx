@@ -92,7 +92,7 @@ export default function Login() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder={isFirebaseConfigured ? 'example@company.sa' : 'admin@company.sa'}
+                placeholder={isFirebaseConfigured ? 'example@company.com' : 'admin@company.com'}
                 required
                 autoComplete="email"
                 className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white placeholder-slate-500 rounded-xl focus:ring-2 focus:ring-teal-500/50 focus:border-teal-500/50 focus:outline-none transition-all text-sm"
@@ -169,7 +169,7 @@ export default function Login() {
 
         {/* Attribution */}
         <p className="text-center text-slate-600 text-xs mt-4">
-          Admin Dashboard v2 · Enterprise Edition 🇸🇦
+          Admin Dashboard v2 · Enterprise Edition 🌍
         </p>
       </div>
     </div>

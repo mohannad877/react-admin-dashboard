@@ -49,7 +49,7 @@ export default function Header({ onMenuClick }) {
   };
 
   const displayName = currentUser?.displayName || t('admin');
-  const displayEmail = currentUser?.email || 'admin@company.sa';
+  const displayEmail = currentUser?.email || 'admin@company.com';
   const initials = getInitials(displayName);
 
   const handleLogout = async () => {

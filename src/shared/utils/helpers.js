@@ -11,19 +11,19 @@ export const calculateProductStatus = (stock, minAlert = 10) => {
 };
 
 /**
- * تنسيق السعر بالريال السعودي
+ * تنسيق السعر بالدولار
  */
 export const formatPrice = (price) => {
-  return `${Number(price).toLocaleString('ar-SA')} ر.س`;
+  return `$${Number(price).toLocaleString()}`;
 };
 
 /**
- * تنسيق التاريخ بالعربية
+ * تنسيق التاريخ
  */
 export const formatDate = (dateStr) => {
-  return new Date(dateStr).toLocaleDateString('ar-SA', {
+  return new Date(dateStr).toLocaleDateString('en-US', {
     year: 'numeric',
-    month: 'long',
+    month: 'short',
     day: 'numeric'
   });
 };

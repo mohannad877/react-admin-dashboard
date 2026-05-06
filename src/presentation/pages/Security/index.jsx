@@ -9,9 +9,9 @@ export default function Security() {
 
   // Mock login history
   const loginHistory = [
-    { id: 1, device: 'MacBook Pro (Chrome)', location: 'الرياض، السعودية', ip: '192.168.1.1', time: 'الآن', status: 'active' },
-    { id: 2, device: 'iPhone 13 (Safari)', location: 'الرياض، السعودية', ip: '10.0.0.4', time: 'أمس، 14:30', status: 'success' },
-    { id: 3, device: 'Windows PC (Edge)', location: 'جدة، السعودية', ip: '172.16.0.2', time: 'منذ 3 أيام', status: 'success' },
+    { id: 1, device: 'MacBook Pro (Chrome)', location: 'نيويورك، الولايات المتحدة', ip: '192.168.1.1', time: 'الآن', status: 'active' },
+    { id: 2, device: 'iPhone 13 (Safari)', location: 'دبي، الإمارات', ip: '10.0.0.4', time: 'أمس، 14:30', status: 'success' },
+    { id: 3, device: 'Windows PC (Edge)', location: 'لندن، المملكة المتحدة', ip: '172.16.0.2', time: 'منذ 3 أيام', status: 'success' },
     { id: 4, device: 'Unknown Device', location: 'موسكو، روسيا', ip: '45.33.22.1', time: 'منذ أسبوع', status: 'failed' },
   ];
 

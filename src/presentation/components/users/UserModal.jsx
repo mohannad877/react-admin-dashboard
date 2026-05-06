@@ -112,7 +112,7 @@ export default function UserModal({ user, onClose, onSave }) {
                 value={formData.email}
                 onChange={(e) => handleChange('email', e.target.value)}
                 className={inputClass('email')}
-                placeholder="example@company.sa"
+                placeholder="example@company.com"
                 dir="ltr"
               />
               {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}

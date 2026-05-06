@@ -23,7 +23,7 @@ import * as Sentry from '@sentry/react';
 // ─── بيانات الدخول للمحاكاة (التطوير المحلي فقط) ─────────────────────────
 const MOCK_USER = {
   uid: 'mock-dev-user',
-  email: 'admin@company.sa',
+  email: 'admin@company.com',
   displayName: 'المسؤول',
   photoURL: null,
 };

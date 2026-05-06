@@ -124,7 +124,7 @@ export default function ProductModal({ product, onClose, onSave }) {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">
-                السعر (ر.س) <span className="text-red-500">*</span>
+                السعر ($) <span className="text-red-500">*</span>
               </label>
               <input
                 type="number"
