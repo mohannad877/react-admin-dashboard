@@ -118,7 +118,7 @@ export default function Sidebar({ collapsed, onToggle, className = '' }) {
           <Globe size={18} className="text-blue-500 flex-shrink-0" />
           {!collapsed && (
             <span>
-              {t('language')}
+              {t('language')}: {i18n.language.startsWith('ar') ? 'العربية' : i18n.language.startsWith('fr') ? 'Français' : 'English'}
             </span>
           )}
         </button>
