@@ -73,6 +73,40 @@ export class UserRepository {
     await api.delete(`/users/${id}`);
     return true;
   }
+
+  // ─── استيراد جماعي ───────────────────────────────────────────────────────
+
+  /**
+   * استيراد مجموعة مستخدمين دفعة واحدة (من ملف CSV)
+   * @param {Object[]} users - مصفوفة المستخدمين
+   * @returns {Promise<{success: number, failed: number, errors: string[]}>}
+   */
+  async bulkCreate(users) {
+    const results = { success: 0, failed: 0, errors: [] };
+
+    if (useSupabase) {
+      const { data, error } = await supabase.from('users').insert(users).select();
+      if (error) {
+        results.failed = users.length;
+        results.errors.push(error.message);
+      } else {
+        results.success = data?.length ?? 0;
+      }
+      return results;
+    }
+
+    // JSON Server: إدراج فردي لكل مستخدم
+    for (const user of users) {
+      try {
+        await api.post('/users', user);
+        results.success++;
+      } catch (err) {
+        results.failed++;
+        results.errors.push(`${user.name ?? '?'}: ${err.message}`);
+      }
+    }
+    return results;
+  }
 }
 
 export const userRepository = new UserRepository();

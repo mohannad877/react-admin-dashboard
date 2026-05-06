@@ -75,6 +75,41 @@ export class ProductRepository {
     await api.delete(`/products/${id}`);
     return true;
   }
+
+  // ─── استيراد جماعي ───────────────────────────────────────────────────────
+
+  /**
+   * استيراد مجموعة منتجات دفعة واحدة (من ملف CSV)
+   * @param {Object[]} products - مصفوفة المنتجات
+   * @returns {Promise<{success: number, failed: number, errors: string[]}>}
+   */
+  async bulkCreate(products) {
+    const results = { success: 0, failed: 0, errors: [] };
+
+    if (useSupabase) {
+      // Supabase يدعم الإدراج الجماعي مباشرةً
+      const { data, error } = await supabase.from('products').insert(products).select();
+      if (error) {
+        results.failed = products.length;
+        results.errors.push(error.message);
+      } else {
+        results.success = data?.length ?? 0;
+      }
+      return results;
+    }
+
+    // JSON Server: إدراج فردي لكل منتج
+    for (const product of products) {
+      try {
+        await api.post('/products', product);
+        results.success++;
+      } catch (err) {
+        results.failed++;
+        results.errors.push(`${product.name ?? '?'}: ${err.message}`);
+      }
+    }
+    return results;
+  }
 }
 
 export const productRepository = new ProductRepository();
