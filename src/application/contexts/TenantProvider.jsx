@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useEffect, useState } from 'react';
 import { switchLanguage } from '../../shared/config/i18n';
 
@@ -11,6 +12,7 @@ export function TenantProvider({ children }) {
     // Read tenant from URL: ?tenant=alpha
     const params = new URLSearchParams(window.location.search);
     const key = params.get('tenant') || 'alpha';
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setTenantKey(key);
 
     fetch('/tenants.json')

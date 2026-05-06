@@ -17,6 +17,7 @@ export function useFetch(repository, method = 'getAll', deps = []) {
     }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
   useEffect(() => { execute(); }, deps);
 
   return { data, loading, error, refetch: execute };

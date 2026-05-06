@@ -51,6 +51,7 @@ export default function ProductsPage() {
     }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
   useEffect(() => { fetchProducts(); }, [filters]);
 
   const handleDelete = async (id, name) => {

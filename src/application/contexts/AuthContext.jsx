@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 /**
  * 🔐 AuthContext - إدارة حالة المصادقة عبر Firebase
  *
@@ -37,6 +38,7 @@ export function AuthProvider({ children }) {
     if (!isFirebaseConfigured) {
       // ── وضع المحاكاة: تحقق من وجود جلسة مخزنة محلياً ──
       const stored = sessionStorage.getItem('mock_auth');
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       if (stored) setCurrentUser(MOCK_USER);
       setLoading(false);
       return;

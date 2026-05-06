@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Users, Package, AlertTriangle, TrendingUp, ShoppingCart, Activity } from 'lucide-react';
+import { Users, Package, AlertTriangle, Activity } from 'lucide-react';
 import { userRepository } from '../../../infrastructure/repositories/UserRepository';
 import { productRepository } from '../../../infrastructure/repositories/ProductRepository';
 import {

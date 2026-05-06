@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Menu, Bell, LogOut, ChevronDown, Check } from 'lucide-react';
+import { Menu, Bell, LogOut, ChevronDown } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import { useTenant } from '../../application/contexts/TenantProvider';
 import { useAuth } from '../../application/contexts/AuthContext';

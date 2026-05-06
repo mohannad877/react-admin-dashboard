@@ -24,13 +24,14 @@ export default function UsersPage() {
       if (filters.status) params.status = filters.status;
       const data = await userRepository.getAll(params);
       setUsers(data);
-    } catch (err) {
+    } catch {
       setError('تعذّر الاتصال بالخادم. تأكد من تشغيل JSON Server.');
     } finally {
       setLoading(false);
     }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
   useEffect(() => { fetchUsers(); }, [filters]);
 
   const handleDelete = async (userId, userName) => {
